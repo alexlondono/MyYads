@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".digital_msg_board"
-                  android:lockTaskMode="normal" > <!-- Added to lock everyone out of phone -->
+                  android:lockTaskMode="never" > <!-- Added to lock everyone out of phone -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.HOME"/>  <!-- .LAUNCHER was original setting -->
+                <category android:name="android.intent.category.LAUNCHER"/>  <!-- .HOME was test setting -->
             </intent-filter>
 
 

@@ -35,7 +35,7 @@ public class digital_msg_board extends AppCompatActivity
         super.onCreate(savedInstanceState);
 //----------------------------  Forecast Region START  -----------------------------
         String apiKey = "cb96a98e0afb5b016f7bb8841a06332d";
-        double latitude = 37.8267, longitude=-122.4233;
+        double latitude = 43.8054259, longitude=-79.5540045;
         String forecastUrl = "https://api.darksky.net/forecast/" + apiKey + "/"+latitude + "," + longitude;
 
         if(isNetworkAvailable())
@@ -59,7 +59,7 @@ public class digital_msg_board extends AppCompatActivity
                     {
                         String jsonData = response.body().string();  //store all weather deta in here
 
-                        Log.v(TAG, response.body().string());
+                        Log.v(TAG, jsonData);  //causes error
                         if(response.isSuccessful())
                         {
                             mCurrentWeather = getCurrentDetails(jsonData);
@@ -104,8 +104,8 @@ public class digital_msg_board extends AppCompatActivity
         setContentView(R.layout.root_layout);
 
         WebView webView = (WebView) findViewById(R.id.main_ad);
-        //webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=3000");
-        webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?delayms=4500&loop=true&start=true&slide=id.p");
+        //webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?delayms=4500&loop=true&start=true&slide=id.p");
+        webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?start=true&loop=true&delayms=3000");
         //webView.loadUrl("");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
@@ -119,7 +119,19 @@ public class digital_msg_board extends AppCompatActivity
 String timezone = forecast.getString("timezone");
         Log.i(TAG, "From Json: "+ timezone);
 
-        return null;
+        JSONObject currently = forecast.getJSONObject("currently");
+
+        CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setHumidity(currently.getDouble("humidity"));
+        currentWeather.setTime(currently.getLong("time"));
+        currentWeather.setIcon(currently.getString("icon"));
+        currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
+        currentWeather.setSummary(currently.getString("summary"));
+        currentWeather.setTemperature(currently.getDouble("temperature"));
+
+        Log.d(TAG,currentWeather.getFormattedTime());
+
+        return currentWeather;
     }
 
     private boolean isNetworkAvailable()
