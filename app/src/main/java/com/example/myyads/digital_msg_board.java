@@ -105,10 +105,12 @@ public class digital_msg_board extends AppCompatActivity
 
         WebView webView = (WebView) findViewById(R.id.main_ad);
         //webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?delayms=4500&loop=true&start=true&slide=id.p");
-        webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?start=true&loop=true&delayms=3000");
-        //webView.loadUrl("");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=2000");
+        //webView.loadUrl("");
+
+
 
 
     }
@@ -116,7 +118,7 @@ public class digital_msg_board extends AppCompatActivity
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException
     {
             JSONObject forecast = new JSONObject(jsonData);
-String timezone = forecast.getString("timezone");
+        String timezone = forecast.getString("timezone");
         Log.i(TAG, "From Json: "+ timezone);
 
         JSONObject currently = forecast.getJSONObject("currently");
@@ -128,6 +130,7 @@ String timezone = forecast.getString("timezone");
         currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
+        currentWeather.setTimeZone(timezone);
 
         Log.d(TAG,currentWeather.getFormattedTime());
 

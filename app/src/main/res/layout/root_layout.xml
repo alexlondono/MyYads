@@ -1,41 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.myyads.digital_msg_board">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/linearLayout_Top"
-        android:layout_alignParentStart="true"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_height="75dp">
-
-        <TextClock
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textClock"
-            android:textSize="40sp"
-            android:textAlignment="textEnd"
-            android:layout_gravity="end"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1000dp"
-            android:text="Today's date"
-            android:textAlignment="textEnd"
-            android:textAllCaps="false"
-            android:id="@+id/date_textview"/>
-    </LinearLayout>
+    tools:context="com.example.myyads.digital_msg_board"
+    android:background="#fc970b">
 
     <WebView
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/linearLayout_Top"
         android:id="@+id/main_ad"
-        android:layout_height="1650dp"/>
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_height="875dp"
+        android:layout_width="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tempLabel"
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="55sp"
+        android:layout_above="@+id/main_ad"
+        android:layout_alignParentStart="false"
+        android:layout_marginStart="39dp"
+        android:textColor="@android:color/white"/>
+
+    <TextClock
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textAlignment="textEnd"
+        android:layout_above="@+id/main_ad"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="21dp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today's date"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:layout_marginStart="29dp"
+        android:layout_alignBaseline="@+id/tempLabel"
+        android:layout_alignBottom="@+id/tempLabel"
+        android:layout_alignStart="@+id/timeLabel"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        app:srcCompat="@drawable/degree"
+        android:layout_width="10dp"
+        android:layout_alignTop="@+id/tempLabel"
+        android:layout_toEndOf="@+id/tempLabel"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="P.O.P."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginStart="12dp"
+        android:id="@+id/popLabel"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:fontFamily="sans-serif"
+        android:paddingTop="5dp"/>
+
+    <TextView
+        android:text="20%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/value_of_popLabel"
+        android:textSize="10sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/popLabel"
+        android:layout_alignStart="@+id/popLabel"/>
+
+    <TextView
+        android:text="Humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/humidityLabel"
+        android:textSize="10sp"
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/dateLabel"
+        android:layout_alignStart="@+id/value_of_popLabel"/>
+
+    <TextView
+        android:text="50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/humidityLabel"
+        android:layout_alignStart="@+id/humidityLabel"
+        android:id="@+id/value_of_humidityLabel"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"/>
 
 </RelativeLayout>

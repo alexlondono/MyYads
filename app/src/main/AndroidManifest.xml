@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".digital_msg_board"
-                  android:lockTaskMode="never" > <!-- Added to lock everyone out of phone -->
+                  android:lockTaskMode="never"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
