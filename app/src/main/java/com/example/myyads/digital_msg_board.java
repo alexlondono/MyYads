@@ -3,14 +3,18 @@ package com.example.myyads;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -18,6 +22,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.BindView;                                     //ButterKnife way to add a textview to a var.
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -28,11 +34,26 @@ public class digital_msg_board extends AppCompatActivity
 {
     public static final String TAG = digital_msg_board.class.getSimpleName();
     private CurrentWeather mCurrentWeather;
+    //private ImageView mIconImageView;
+
+//-------------------------------  Butterknife Start ---------------------------------------
+    private TextView mTempLabel;                                  //Old way to add a textview to a var. Before using butterKnife  <--- A.1
+    @BindView(R.id.value_of_humidityLabel) TextView mHumidityValue;        //ButterKnife way to add a textview to a var.
+    @BindView(R.id.value_of_popLabel) TextView mPrecipValue;               //ButterKnife way to add a textview to a var.
+    @BindView(R.id.image_view_weather_icon) ImageView mIconImageView;
+    @BindView(R.id.dateLabel) TextView mDateLabel;
+    //@BindView(R.id.summaryLabel) TextView mSummaryLabel;
+    //@BindView(R.id.iconImageView) ImageView mIconImageView;
+//-------------------------------  Butterknife END ---------------------------------------
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState)      //Not part of butterKnife
+    {                                                       //Not part of butterKnife
+        super.onCreate(savedInstanceState);                 //Not part of butterKnife
+        setContentView(R.layout.root_layout);               //Not part of butterKnife
+        ButterKnife.bind(this);                                            //ButterKnife way to add a textview to a var.
+
+        mTempLabel = (TextView)findViewById(R.id.tempLabel);    //Old way to add a textview to a var. Before using butterKnife    <--- A.2
 //----------------------------  Forecast Region START  -----------------------------
         String apiKey = "cb96a98e0afb5b016f7bb8841a06332d";
         double latitude = 43.8054259, longitude=-79.5540045;
@@ -59,10 +80,18 @@ public class digital_msg_board extends AppCompatActivity
                     {
                         String jsonData = response.body().string();  //store all weather deta in here
 
-                        Log.v(TAG, jsonData);  //causes error
+                        Log.v(TAG, jsonData);
                         if(response.isSuccessful())
                         {
                             mCurrentWeather = getCurrentDetails(jsonData);
+                            runOnUiThread(new Runnable()       //Important to make this code run on the main thread to be able to alter the layout
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    updateDisplay();
+                                }
+                            });
                         }
                         else
                             alertUserAboutError();
@@ -85,8 +114,8 @@ public class digital_msg_board extends AppCompatActivity
             Toast.makeText(this, R.string.network_unavailable_message, Toast.LENGTH_LONG).show();
         }
         Log.d(TAG,"Main UI code is running!");
-
 //----------------------------  Forecast Region END  --------------------------------
+
 
         View decorView = getWindow().getDecorView();
 // Hide both the navigation bar and the status bar.
@@ -97,11 +126,11 @@ public class digital_msg_board extends AppCompatActivity
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-       // -----------------------------------------------------------------------
+        // -----------------------------------------------------------------------
         //setContentView(R.layout.root_layout);
 
         //web view Main Ad
-        setContentView(R.layout.root_layout);
+        //setContentView(R.layout.root_layout);
 
         WebView webView = (WebView) findViewById(R.id.main_ad);
         //webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?delayms=4500&loop=true&start=true&slide=id.p");
@@ -110,14 +139,22 @@ public class digital_msg_board extends AppCompatActivity
         webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=2000");
         //webView.loadUrl("");
 
+    }
 
+    private void updateDisplay()
+    {
+        mTempLabel.setText(mCurrentWeather.getTemperature() + "");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
+        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
+        mDateLabel.setText(mCurrentWeather.getFormattedTime() +"");
 
-
+        Drawable drawable = ContextCompat.getDrawable(this, mCurrentWeather.getIconId());
+        mIconImageView.setImageDrawable(drawable);
     }
 
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException
     {
-            JSONObject forecast = new JSONObject(jsonData);
+        JSONObject forecast = new JSONObject(jsonData);
         String timezone = forecast.getString("timezone");
         Log.i(TAG, "From Json: "+ timezone);
 

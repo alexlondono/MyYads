@@ -15,18 +15,18 @@
         android:layout_alignParentBottom="true"
         android:layout_height="875dp"
         android:layout_width="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/tempLabel"
-        android:text="100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="55sp"
         android:layout_above="@+id/main_ad"
         android:layout_alignParentStart="false"
         android:layout_marginStart="39dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:text="--"/>
 
     <TextClock
         android:id="@+id/timeLabel"
@@ -37,7 +37,8 @@
         android:layout_above="@+id/main_ad"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="21dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:paddingEnd="10dp"/>
 
     <TextView
         android:id="@+id/dateLabel"
@@ -50,7 +51,8 @@
         android:layout_alignBaseline="@+id/tempLabel"
         android:layout_alignBottom="@+id/tempLabel"
         android:layout_alignStart="@+id/timeLabel"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:paddingEnd="10dp"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -75,7 +77,7 @@
         android:paddingTop="5dp"/>
 
     <TextView
-        android:text="20%"
+        android:text="--%"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/value_of_popLabel"
@@ -95,7 +97,7 @@
         android:layout_alignStart="@+id/value_of_popLabel"/>
 
     <TextView
-        android:text="50"
+        android:text="---"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/humidityLabel"
@@ -103,5 +105,13 @@
         android:id="@+id/value_of_humidityLabel"
         android:textColor="@android:color/white"
         android:textSize="10sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sunny"
+        android:id="@+id/image_view_weather_icon"
+        android:layout_marginStart="7dp"
+        android:layout_alignBottom="@+id/value_of_popLabel"/>
 
 </RelativeLayout>

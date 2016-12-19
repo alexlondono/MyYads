@@ -89,9 +89,9 @@ public class CurrentWeather
         return mTime;
     }
 
-    public String getFormattedTime()
+    public String getFormattedTime(/*String Template*/) //ex template = "h:mm a"  or "E M d, y"
     {
-        SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat formatter = new SimpleDateFormat("E MMM. d, y");
         formatter.setTimeZone(TimeZone.getTimeZone(getTimeZone()));
         Date dateTime = new Date(getTime() * 1000);
         String timeString = formatter.format(dateTime);
@@ -104,9 +104,9 @@ public class CurrentWeather
         mTime = time;
     }
 
-    public double getTemperature()
+    public int getTemperature()
     {
-        return mTemperature;
+        return (int)Math.round(mTemperature);
     }
 
     public void setTemperature(double temperature)
@@ -119,18 +119,12 @@ public class CurrentWeather
         return mHumidity;
     }
 
-    public void setHumidity(double humidity)
+    public void setHumidity(double humidity){ mHumidity = humidity; }
+
+    public int getPrecipChance()
     {
-        mHumidity = humidity;
+        return (int)Math.round(mPrecipChance * 100);
     }
 
-    public double getPrecipChance()
-    {
-        return mPrecipChance;
-    }
-
-    public void setPrecipChance(double precipChance)
-    {
-        mPrecipChance = precipChance;
-    }
+    public void setPrecipChance(double precipChance){ mPrecipChance = precipChance; }
 }
