@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class digital_msg_board extends AppCompatActivity
     public static final String TAG = digital_msg_board.class.getSimpleName();
     private CurrentWeather mCurrentWeather;
     //private ImageView mIconImageView;
+    private int currentApiVersion;  // Used to HIDE UI
 
 //-------------------------------  Butterknife Start ---------------------------------------
     private TextView mTempLabel;                                  //Old way to add a textview to a var. Before using butterKnife  <--- A.1
@@ -47,6 +49,7 @@ public class digital_msg_board extends AppCompatActivity
 //-------------------------------  Butterknife END ---------------------------------------
 
     @Override
+    @SuppressLint("NewApi")
     protected void onCreate(Bundle savedInstanceState)      //Not part of butterKnife
     {                                                       //Not part of butterKnife
         super.onCreate(savedInstanceState);                 //Not part of butterKnife
@@ -54,6 +57,43 @@ public class digital_msg_board extends AppCompatActivity
         ButterKnife.bind(this);                                            //ButterKnife way to add a textview to a var.
 
         mTempLabel = (TextView)findViewById(R.id.tempLabel);    //Old way to add a textview to a var. Before using butterKnife    <--- A.2
+
+//  -----------------------  HIDE UI START ----------------------------------------
+
+        currentApiVersion = Build.VERSION.SDK_INT;
+
+        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        // This work only for android 4.4+
+        if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
+        {
+
+            getWindow().getDecorView().setSystemUiVisibility(flags);
+
+            // Code below is to handle presses of Volume up or Volume down.
+            // Without this, after pressing volume buttons, the navigation bar will
+            // show up and won't hide
+            final View decorView = getWindow().getDecorView();
+            decorView
+                    .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener()
+                    {
+
+                        @Override
+                        public void onSystemUiVisibilityChange(int visibility)
+                        {
+                            if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
+                            {
+                                decorView.setSystemUiVisibility(flags);
+                            }
+                        }
+                    });
+        }
+//  ----------------------- HIDE UI END  ------------------------------------------
 //----------------------------  Forecast Region START  -----------------------------
         String apiKey = "cb96a98e0afb5b016f7bb8841a06332d";
         double latitude = 43.8054259, longitude=-79.5540045;
@@ -116,7 +156,7 @@ public class digital_msg_board extends AppCompatActivity
         Log.d(TAG,"Main UI code is running!");
 //----------------------------  Forecast Region END  --------------------------------
 
-
+/*
         View decorView = getWindow().getDecorView();
 // Hide both the navigation bar and the status bar.
 // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
@@ -125,7 +165,7 @@ public class digital_msg_board extends AppCompatActivity
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-
+*/
         // -----------------------------------------------------------------------
         //setContentView(R.layout.root_layout);
 
@@ -137,8 +177,25 @@ public class digital_msg_board extends AppCompatActivity
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=2000");
-        //webView.loadUrl("");
+        //webView.loadData(getHTMLData(),"text/html","UTF-8");
 
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+        if(currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus)
+        {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
     private void updateDisplay()
@@ -190,5 +247,21 @@ public class digital_msg_board extends AppCompatActivity
     {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(),"error_dialog");
+    }
+
+    private String getHTMLData() {
+        String html = new String();
+        html.concat("<html>");
+        html.concat("<head>");
+
+        //html.concat("<link rel=stylesheet href='css/style.css'>");
+        html.concat("</head>");
+        html.concat("<body>");
+        html.concat("<div style=\"width:604px;height:885px;overflow:hidden;\" >\n" +
+                "<iframe src=\"https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=3000\" frameborder=\"0\" width=\"604\" height=\"875\" allowfullscreen=\"false\" </div>");
+        html.concat("</body>");
+        html.concat("</html>");
+
+        return html;
     }
 }
