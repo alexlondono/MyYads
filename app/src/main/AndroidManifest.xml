@@ -20,6 +20,8 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>  <!-- .HOME was test setting -->
+                <category android:name="android.intent.category.HOME"/>      <!-- added aside from digital_msg_board class to control back/home button -->
+                <category android:name="android.intent.category.DEFAULT" />  <!-- added aside from digital_msg_board class to control back/home button -->
             </intent-filter>
 
 

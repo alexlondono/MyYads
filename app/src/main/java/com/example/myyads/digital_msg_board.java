@@ -97,7 +97,7 @@ public class digital_msg_board extends AppCompatActivity
 //----------------------------  Forecast Region START  -----------------------------
         String apiKey = "cb96a98e0afb5b016f7bb8841a06332d";
         double latitude = 43.8054259, longitude=-79.5540045;
-        String forecastUrl = "https://api.darksky.net/forecast/" + apiKey + "/"+latitude + "," + longitude;
+        String forecastUrl = "https://api.darksky.net/forecast/" + apiKey + "/"+latitude + "," + longitude + "?units=si";
 
         if(isNetworkAvailable())
         {
@@ -173,10 +173,10 @@ public class digital_msg_board extends AppCompatActivity
         //setContentView(R.layout.root_layout);
 
         WebView webView = (WebView) findViewById(R.id.main_ad);
-        //webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/pub?delayms=4500&loop=true&start=true&slide=id.p");
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://docs.google.com/presentation/d/1QyNNURCVBme50SAuIceq3sh7Ky74LuWNeEM8B910aC4/embed?start=true&loop=true&delayms=2000");
+        //webView.loadUrl("https://slides.com/tyrant911/deck/live"); //?autoSlide=5000&autoSlideStoppable=false&loop=true&controls=false&progress=false
+        webView.loadUrl("file:///android_asset/index.html");
+        webView.getSettings().setJavaScriptEnabled(true);
         //webView.loadData(getHTMLData(),"text/html","UTF-8");
 
     }
@@ -192,8 +192,8 @@ public class digital_msg_board extends AppCompatActivity
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION  // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN       // hide status bar
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
