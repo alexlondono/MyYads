@@ -1,4 +1,6 @@
-package com.example.myyads;
+package com.example.myyads.weather;
+
+import com.example.myyads.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.TimeZone;
  * Created by Alex on 12/16/2016.
  */
 
-public class CurrentWeather
+public class Current
 {
     private String mSummary;
     private String mTimeZone;

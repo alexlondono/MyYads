@@ -6,7 +6,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.myyads.digital_msg_board"
+    tools:context="com.example.myyads.ui.digital_msg_board"
     android:background="#fc970b">
 
     <WebView

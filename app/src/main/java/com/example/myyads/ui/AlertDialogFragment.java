@@ -1,10 +1,12 @@
-package com.example.myyads;
+package com.example.myyads.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+
+import com.example.myyads.R;
 
 /**
  * Created by Alex on 12/15/2016.
