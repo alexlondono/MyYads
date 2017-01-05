@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:allowBackup="true"
@@ -12,19 +12,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.digital_msg_board"
-                  android:lockTaskMode="never"
+        <activity
+            android:name=".ui.digital_msg_board"
+            android:lockTaskMode="never"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>  <!-- .HOME was test setting -->
-                <category android:name="android.intent.category.HOME"/>      <!-- added aside from digital_msg_board class to control back/home button -->
-                <category android:name="android.intent.category.DEFAULT" />  <!-- added aside from digital_msg_board class to control back/home button -->
+                <category android:name="android.intent.category.LAUNCHER"/> <!-- .HOME was test setting -->
+                <category android:name="android.intent.category.HOME"/> <!-- added aside from digital_msg_board class to control back/home button -->
+                <category android:name="android.intent.category.DEFAULT"/> <!-- added aside from digital_msg_board class to control back/home button -->
             </intent-filter>
-
-
+        </activity>
+        <activity android:name=".ui.DailyForecastActivity">
         </activity>
     </application>
 

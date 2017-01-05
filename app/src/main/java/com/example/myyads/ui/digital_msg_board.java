@@ -2,6 +2,7 @@ package com.example.myyads.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,8 +20,11 @@ import android.widget.Toast;
 
 import com.example.myyads.R;
 import com.example.myyads.weather.Current;
+import com.example.myyads.weather.Day;
 import com.example.myyads.weather.Forecast;
+import com.example.myyads.weather.Hour;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,6 +32,7 @@ import java.io.IOException;
 
 import butterknife.BindView;                                     //ButterKnife way to add a textview to a var.
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -37,6 +42,7 @@ import okhttp3.Response;
 public class digital_msg_board extends AppCompatActivity
 {
     public static final String TAG = digital_msg_board.class.getSimpleName();
+    public static final String DAILY_FORECAST = "DAILY_FORECAST";
     private Current mCurrent;
     private Forecast mForecast;
     //private ImageView mIconImageView;
@@ -221,10 +227,64 @@ public class digital_msg_board extends AppCompatActivity
         Forecast forecast = new Forecast();
 
         forecast.setCurrent(getCurrentDetails(jsonData));
+        forecast.setHourlyForecast(getHourlyForecast(jsonData));
+        forecast.setDailyForecast(getDailyForecast(jsonData));
 
         return forecast;
     }
 
+    private Hour[] getHourlyForecast(String jD) throws JSONException
+    {
+        JSONObject forecast = new JSONObject(jD);
+        String timezone = forecast.getString("timezone");
+        Log.i(TAG, "From Json: Hour[] "+ timezone);
+        JSONObject hourly = forecast.getJSONObject("hourly"); //go into main jason data and dig into sub section called hourly
+        JSONArray data = hourly.getJSONArray("data");
+
+        Hour[] hours = new Hour[data.length()];
+
+        for(int i=0; i < hourly.getJSONArray("data").length(); i++)
+        {
+            JSONObject jsonHour = data.getJSONObject(i);
+            Hour individualHour = new Hour();
+
+            individualHour.setSummary(jsonHour.getString("summary"));
+            individualHour.setIcon(jsonHour.getString("icon"));
+            individualHour.setTemperature(jsonHour.getDouble("temperature"));
+            individualHour.setTime(jsonHour.getLong("time"));
+            individualHour.setTimezone(timezone);
+
+            hours[i] = individualHour;
+        }
+
+        return hours;
+    }
+
+    private Day[] getDailyForecast(String jsonData) throws JSONException
+    {
+        JSONObject forecast = new JSONObject(jsonData);
+        String timezone = forecast.getString("timezone");
+        JSONObject daily = forecast.getJSONObject("daily");
+        JSONArray data = daily.getJSONArray("data");
+
+        Day[] days = new  Day[data.length()];
+
+        for(int i=0; i < data.length(); i++)
+        {
+            JSONObject jsonDay = data.getJSONObject(i);
+            Day individualDay = new Day();
+
+            individualDay.setSummary(jsonDay.getString("summary"));
+            individualDay.setIcon(jsonDay.getString("icon"));
+            individualDay.setTime(jsonDay.getLong("time"));
+            individualDay.setTemperatureMax(jsonDay.getDouble("temperatureMax"));
+            individualDay.setTimezone(timezone);
+
+            days[i] = individualDay;
+        }
+
+        return days;
+    }
 
     private Current getCurrentDetails(String jsonData) throws JSONException
     {
@@ -280,5 +340,19 @@ public class digital_msg_board extends AppCompatActivity
         html.concat("</html>");
 
         return html;
+    }
+
+    @OnClick(R.id.daily_Button)
+    public void startDailyActivity(View view)
+    {
+        Intent intent = new Intent(this, DailyForecastActivity.class);
+        intent.putExtra(DAILY_FORECAST, mForecast.getDailyForecast());
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.hourly_Button)
+    public void startHourlyActivity(View view)
+    {
+
     }
 }

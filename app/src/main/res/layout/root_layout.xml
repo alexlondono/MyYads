@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.myyads.ui.digital_msg_board"
-    android:background="#fc970b">
+    android:background="@drawable/bg_gradient">
 
     <WebView
         android:id="@+id/main_ad"
@@ -113,5 +113,58 @@
         android:id="@+id/image_view_weather_icon"
         android:layout_marginStart="7dp"
         android:layout_alignBottom="@+id/value_of_popLabel"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_btns_LinearLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+        <Button
+            android:text="Hourly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/hourly_Button"
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            android:background="#40ffffff"
+            android:layout_marginLeft="20dp"/>
+
+        <Button
+            android:text="7 Day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/daily_Button"
+            android:layout_weight="1"
+            android:background="#40ffffff"
+            android:textColor="#ffffffff"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_marginLeft="10dp"
+            android:onClick="startDailyActivity"/>
+
+        <Button
+            android:text="Traffic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            android:background="#40ffffff"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:text="Sports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="#40ffffff"/>
+    </LinearLayout>
 
 </RelativeLayout>

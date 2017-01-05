@@ -11,6 +11,8 @@ public class Hour
     private double mTemperature;
     private String mIcon;
     private String mTimezone;
+    private double mHumidity;
+    private double mPrecipChance;
 
     public long getTime()
     {
@@ -60,5 +62,25 @@ public class Hour
     public void setTimezone(String timezone)
     {
         mTimezone = timezone;
+    }
+
+    public double getHumidity()
+    {
+        return mHumidity;
+    }
+
+    public void setHumidity(double humidity)
+    {
+        mHumidity = humidity;
+    }
+
+    public double getPrecipChance()
+    {
+        return mPrecipChance;
+    }
+
+    public void setPrecipChance(double precipChance)
+    {
+        mPrecipChance = precipChance;
     }
 }
