@@ -3,9 +3,7 @@ package com.example.myyads.ui;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
 import com.example.myyads.R;
 import com.example.myyads.adapters.DayAdapter;

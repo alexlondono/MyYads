@@ -43,6 +43,7 @@ public class digital_msg_board extends AppCompatActivity
 {
     public static final String TAG = digital_msg_board.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
+    public static final String HOURLY_FORECAST = "HOURLY_FORECAST";
     private Current mCurrent;
     private Forecast mForecast;
     //private ImageView mIconImageView;
@@ -253,6 +254,8 @@ public class digital_msg_board extends AppCompatActivity
             individualHour.setTemperature(jsonHour.getDouble("temperature"));
             individualHour.setTime(jsonHour.getLong("time"));
             individualHour.setTimezone(timezone);
+            individualHour.setPrecipChance(jsonHour.getDouble("precipProbability"));
+            individualHour.setHumidity(jsonHour.getDouble("humidity"));
 
             hours[i] = individualHour;
         }
@@ -345,7 +348,7 @@ public class digital_msg_board extends AppCompatActivity
     @OnClick(R.id.daily_Button)
     public void startDailyActivity(View view)
     {
-        Intent intent = new Intent(this, DailyForecastActivity.class);
+        Intent intent = new Intent(this, DailyForecastActivity.class);   // 'this' = the context
         intent.putExtra(DAILY_FORECAST, mForecast.getDailyForecast());
         startActivity(intent);
     }
@@ -353,6 +356,8 @@ public class digital_msg_board extends AppCompatActivity
     @OnClick(R.id.hourly_Button)
     public void startHourlyActivity(View view)
     {
-
+        Intent intent = new Intent(this, HourlyForecastActivity.class);  // 'this' = the context
+        intent.putExtra(HOURLY_FORECAST, mForecast.getHourlyForecast());
+        startActivity(intent);
     }
 }

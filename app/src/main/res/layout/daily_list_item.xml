@@ -16,12 +16,14 @@
         android:id="@+id/circleImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/bg_temperature"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/bg_temperature"
+        android:contentDescription='Circle Image used to encase temperature number'/>
 
     <ImageView
-        android:id="@+id/iconImageView"
+        android:id="@+id/iconImageView_Hourly_li"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/clear_day"
@@ -36,14 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iconImageView"
-        android:layout_toEndOf="@+id/iconImageView"
+        android:layout_toRightOf="@+id/iconImageView_Hourly_li"
+        android:layout_toEndOf="@+id/iconImageView_Hourly_li"
         android:textSize="20sp"
         android:textColor="#ffffffff"
         tools:text="Wednesday"/>
 
     <TextView
-        android:id="@+id/temperatureLabel"
+        android:id="@+id/temperatureLabel_Hourly_li"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/circleImageView"

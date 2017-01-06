@@ -116,6 +116,8 @@ public class Day implements Parcelable
         dest.writeDouble(mTemperatureMax);
         dest.writeString(mIcon);
         dest.writeString(mTimezone);
+        dest.writeDouble(mHumidity);
+        dest.writeDouble(mPrecipChance);
     }
 
     //Parcel to go in
@@ -126,6 +128,8 @@ public class Day implements Parcelable
         mTemperatureMax = in.readDouble();
         mIcon = in.readString();
         mTimezone = in.readString();
+        mHumidity = in.readDouble();
+        mPrecipChance = in.readDouble();
     }
 
     public static final Creator<Day> CREATOR = new Creator<Day>()
